@@ -1,73 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Online Taxi API - Branas
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This repository is the practical project for an online taxi service from the clean code and clean architecture course run by Rodrigo Branas.
 
-## Description
+## Stack utilizada
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- NodeJS
+- NestJS
+- Vitest
 
-## Installation
+## Functional requirements
 
-```bash
-$ npm install
-```
+1) Signup.
+2) Get account.
+3) Request ride.
+4) Accept ride.
+5) Start ride.
+6) Finish ride.
+7) Get ride.
+8) Get rides.
+9) Update position.
+10) Process payment.
+11) Login.
+12) Verify token.
+13) Evaluate ride.
+14) Update account.
+15) Send receipt.
+16) Estimate Fare.
 
-## Running the app
+## Business Rules
 
-```bash
-# development
-$ npm run start
+1) Unique Registration by Email.
+- Do not allow the creation of multiple accounts with the same email.
 
-# watch mode
-$ npm run start:dev
+2) Open Rides Restriction.
+- A passenger cannot request a new ride if they already have an incomplete ride.
 
-# production mode
-$ npm run start:prod
-```
+3) Ride Acceptance.
+- Drivers can only accept rides with the status REQUESTED.
+- Drivers cannot accept other rides after accepting one.
 
-## Test
+4) Ride Lifecycle.
+- Rides follow the cycle: REQUESTED -> ACCEPTED -> IN PROGRESS -> COMPLETED.
+- Rides can be canceled by passengers or drivers before being completed or canceled.
 
-```bash
-# unit tests
-$ npm run test
+5) Fare Calculation.
+- The fare is calculated based on the distance traveled and the price table depending on the day and time.
 
-# e2e tests
-$ npm run test:e2e
+6) Payment Processing.
+- Payment must be processed after fare calculation.
 
-# test coverage
-$ npm run test:cov
-```
+7) Position Update.
+- Position must be updated every minute during the ride.
 
-## Support
+8) Schedules and Rates.
+- Difference in rates based on the time of day and day of the week.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
