@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id';
 import { AggregateRoot } from '@/core/aggregate-root';
 import { DomainProps } from '@/core/domain-props';
-import { ValidationHandler } from '@/core/validation/validation-handler';
-import { AccountValidator } from './account-validator';
 import { Optional } from '@/core/optional';
+import { ValidationHandler } from '@/core/validation/validation-handler';
+import Error from '@/core/validation/error';
 
 export interface AccountProps extends DomainProps {
   cpf: string;
@@ -15,7 +15,7 @@ export interface AccountProps extends DomainProps {
   isDriver?: boolean;
 }
 
-export class AccountID extends UniqueEntityID {}
+export class AccountID extends UniqueEntityID { }
 export class Account extends AggregateRoot<AccountProps> {
   static create(
     props: Optional<AccountProps, 'createdAt'>,
@@ -31,6 +31,32 @@ export class Account extends AggregateRoot<AccountProps> {
     );
 
     return account;
+  }
+
+  public validateUpdate(props: Partial<AccountProps>, notification: ValidationHandler) {
+    if (props.isPassenger && props.carPlate) {
+      notification.appendAnError(
+        new Error('Passageiros não podem ter uma placa de carro registrada.')
+      )
+    }
+
+    if (props.isDriver && props.isPassenger) {
+      notification.appendAnError(
+        new Error('Um usuário não pode ser designado como motorista e passageiro ao mesmo tempo.')
+      )
+    }
+
+    if (!props.isDriver && !props.isPassenger) {
+      notification.appendAnError(
+        new Error('É necessário selecionar se o usuário é motorista ou passageiro.')
+      )
+    }
+
+    if (props.isDriver && !props.carPlate) {
+      notification.appendAnError(
+        new Error('Motoristas devem informar a placa do carro.')
+      )
+    }
   }
 
   public update(props: Partial<AccountProps>): void {
