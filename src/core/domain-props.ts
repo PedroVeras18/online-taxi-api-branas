@@ -1,5 +1,5 @@
 export interface DomainProps {
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date | null;
   deletedAt?: Date | null;
 }

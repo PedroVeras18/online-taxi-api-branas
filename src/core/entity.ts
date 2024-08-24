@@ -25,6 +25,4 @@ export default abstract class Entity<Props> {
       ...this.props,
     } as Required<{ id: string } & Props>;
   }
-
-  abstract validate(aHandler: ValidationHandler, context: string): void;
 }

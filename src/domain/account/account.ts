@@ -1,42 +1,45 @@
 import { UniqueEntityID } from '@/core/unique-entity-id';
 import { AggregateRoot } from '@/core/aggregate-root';
-import Cpf from '../value-objects/cpf';
-import Name from '../value-objects/name';
-import Email from '../value-objects/email';
-import CarPlate from '../value-objects/car-plate';
-import Password from '../value-objects/password';
 import { DomainProps } from '@/core/domain-props';
 import { ValidationHandler } from '@/core/validation/validation-handler';
 import { AccountValidator } from './account-validator';
+import { Optional } from '@/core/optional';
 
 export interface AccountProps extends DomainProps {
-  cpf: Cpf;
-  name: Name;
-  email: Email;
-  password: Password;
-  carPlate?: CarPlate;
+  cpf: string;
+  name: string;
+  email: string;
+  password: string;
+  carPlate?: string;
   isPassenger?: boolean;
   isDriver?: boolean;
 }
 
 export class AccountID extends UniqueEntityID {}
-
 export class Account extends AggregateRoot<AccountProps> {
-  static create(aProps: AccountProps, anId?: AccountID) {
-    const defaultProps = {
-      createdAt: new Date(),
-    };
+  static create(
+    props: Optional<AccountProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
+    const account = new Account(
+      {
+        ...props,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      id,
+    );
 
-    return new Account({ ...defaultProps, ...aProps }, anId ?? new AccountID());
+    return account;
   }
 
   public update(props: Partial<AccountProps>): void {
     Object.assign(this.props, { ...props, updatedAt: new Date() });
   }
 
-  validate(aHandler: ValidationHandler, context: string = 'account'): void {
+  /* validate(aHandler: ValidationHandler, context: string = 'account'): void {
     new AccountValidator(this, aHandler, context).validate();
-  }
+  } */
 
   get name() {
     return this.props.name;
