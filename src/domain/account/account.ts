@@ -63,6 +63,10 @@ export class Account extends AggregateRoot<AccountProps> {
     Object.assign(this.props, { ...props, updatedAt: new Date() });
   }
 
+  public deleteAccount() {
+    this.props.deletedAt = new Date();
+  }
+
   get name() {
     return this.props.name;
   }
@@ -89,5 +93,13 @@ export class Account extends AggregateRoot<AccountProps> {
 
   get isDriver() {
     return this.props.isDriver;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  get deletedAt() {
+    return this.props.deletedAt;
   }
 }

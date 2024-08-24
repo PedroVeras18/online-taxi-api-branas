@@ -66,15 +66,13 @@ describe('Update Account', () => {
       length: 8
     });
 
-    const newUser = await makeUser({
+    await makeUser({
       override: {
         id: userId,
         isPassenger: true,
       },
       repository,
     });
-
-    await repository.create(newUser);
 
     const updateUser: UpdateAccountUseCaseRequest = {
       id: userId,
@@ -96,7 +94,7 @@ describe('Update Account', () => {
       length: 8
     });
 
-    const newUser = await makeUser({
+    await makeUser({
       override: {
         id: userId,
         isDriver: true,
@@ -104,8 +102,6 @@ describe('Update Account', () => {
       },
       repository,
     });
-
-    await repository.create(newUser);
 
     const updateUser: UpdateAccountUseCaseRequest = {
       id: userId,
@@ -127,15 +123,13 @@ describe('Update Account', () => {
       length: 8
     });
 
-    const newUser = await makeUser({
+    await makeUser({
       override: {
         id: userId,
         isPassenger: true,
       },
       repository,
     });
-
-    await repository.create(newUser);
 
     const updateUser: UpdateAccountUseCaseRequest = {
       id: userId,
@@ -158,15 +152,13 @@ describe('Update Account', () => {
       length: 8
     });
 
-    const newUser = await makeUser({
+    await makeUser({
       override: {
         id: userId,
         isPassenger: true,
       },
       repository,
     });
-
-    await repository.create(newUser);
 
     const updateUser: UpdateAccountUseCaseRequest = {
       id: userId,
