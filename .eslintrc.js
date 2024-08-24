@@ -13,7 +13,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
-    jest: true,
+    "vitest-globals/env": true
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
