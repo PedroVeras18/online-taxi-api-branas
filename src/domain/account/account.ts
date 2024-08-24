@@ -37,10 +37,6 @@ export class Account extends AggregateRoot<AccountProps> {
     Object.assign(this.props, { ...props, updatedAt: new Date() });
   }
 
-  /* validate(aHandler: ValidationHandler, context: string = 'account'): void {
-    new AccountValidator(this, aHandler, context).validate();
-  } */
-
   get name() {
     return this.props.name;
   }

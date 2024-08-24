@@ -72,6 +72,20 @@ describe('Create Account', () => {
     })
 
     await expect(useCase.execute(fakeUser))
-    .rejects.toThrowError(`${fakeUser.email} já está cadastrado no sistema.`);
+    .rejects.toThrowError(`Não foi possível criar a conta.`);
   });
+
+  it('should not be able to create a passenger account by sending a car plate.', async () => {
+    const fakeUser = await makeUser({
+      override: {
+        isPassenger: true,
+        carPlate: faker.string.alphanumeric({
+          length: 7
+        })
+      }
+    })
+
+    await expect(useCase.execute(fakeUser))
+    .rejects.toThrowError(`Passageiros não podem ter uma placa de carro registrada.`);
+  })
 });

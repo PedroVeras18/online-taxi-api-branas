@@ -27,13 +27,11 @@ export class CreateAccountUseCase {
   async execute(props: CreateAccountRequest): Promise<CreateAccountResponse> {
     const notification = Notification.create();
 
-    const userWithSameEmail = await this.accountRepository.findByEmail(
-      props.email,
-    );
+    await this.validateAccountCreation(props, notification);
 
-    if (userWithSameEmail) {
+    if (notification.hasErrors()) {
       throw new NotificationException(
-        `${props.email} já está cadastrado no sistema.`,
+        "Não foi possível criar a conta.",
         notification,
       );
     }
@@ -50,5 +48,22 @@ export class CreateAccountUseCase {
     return {
       accountId: createdAccount.id.getValue(),
     };
+  }
+
+  private async validateAccountCreation(
+    props: CreateAccountRequest,
+    notification: Notification
+  ): Promise<void> {
+    const userWithSameEmail = await this.accountRepository.findByEmail(
+      props.email,
+    );
+
+    if (userWithSameEmail) {
+      notification.appendAnError(new Error(`${props.email} já está cadastrado no sistema.`));
+    }
+
+    if (props.isPassenger && props.carPlate) {
+      notification.appendAnError(new Error("Passageiros não podem ter uma placa de carro registrada."));
+    }
   }
 }
