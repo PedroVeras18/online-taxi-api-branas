@@ -86,6 +86,6 @@ describe('Create Account', () => {
     })
 
     await expect(useCase.execute(fakeUser))
-    .rejects.toThrowError(`Passageiros não podem ter uma placa de carro registrada.`);
+    .rejects.toThrowError(`Não foi possível criar a conta.`);
   })
 });
