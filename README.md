@@ -56,3 +56,8 @@ This repository is the practical project for an online taxi service from the cle
 8) Schedules and Rates.
 - Difference in rates based on the time of day and day of the week.
 
+## Additional 
+
+1) Authenticate
+2) History
+3) Metrics
