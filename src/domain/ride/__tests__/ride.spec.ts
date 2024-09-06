@@ -1,4 +1,4 @@
-import { Ride, RideProps } from '../ride';
+import { Ride, RideConstructorProps, RideProps } from '../ride';
 import { Coordinate } from '../value-objects.ts/coordinate';
 import { AccountID } from '@/domain/account/account';
 import { RideStatus } from '../ride-status';
@@ -8,7 +8,7 @@ describe('Ride Aggregate', () => {
   let mockCoordinateFrom: Coordinate;
   let mockCoordinateTo: Coordinate;
   let mockPassengerId: AccountID;
-  let rideProps: RideProps;
+  let rideProps: RideConstructorProps;
   let ride: Ride;
 
   beforeEach(() => {
@@ -27,10 +27,6 @@ describe('Ride Aggregate', () => {
       from: mockCoordinateFrom,
       to: mockCoordinateTo,
       passengerId: mockPassengerId,
-      status: RideStatus.REQUESTED,
-      distance: 0,
-      fare: 0,
-      createdAt: new Date(),
     };
 
     ride = Ride.create(rideProps);

@@ -1,10 +1,10 @@
 import { UniqueEntityID } from '@/core/unique-entity-id';
 import { AggregateRoot } from '@/core/aggregate-root';
 import { DomainProps } from '@/core/domain-props';
-import { Optional } from '@/core/optional';
 import { Coordinate } from './value-objects.ts/coordinate';
 import { AccountID } from '../account/account';
 import { RideStatus } from './ride-status';
+import { Replace } from '@/core/replace';
 
 export interface RideProps extends DomainProps {
   from: Coordinate;
@@ -18,9 +18,18 @@ export interface RideProps extends DomainProps {
 
 export class RideID extends UniqueEntityID { }
 
+export type RideConstructorProps = Replace<
+  RideProps,
+  {
+    status?: RideStatus;
+    distance?: number;
+    fare?: number;
+  }
+>
+
 export class Ride extends AggregateRoot<RideProps> {
   static create(
-    props: Optional<RideProps, 'createdAt'>,
+    props: RideConstructorProps,
     id?: RideID,
   ) {
     const ride = new Ride(
