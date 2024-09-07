@@ -3,4 +3,5 @@ import { Ride } from './ride';
 
 export abstract class RideRepository extends Repository<Ride> {
   abstract hasActiveRideByPassengerId(passengerId: string): Promise<boolean>;
+  abstract hasActiveRideByDriverId(driverId: string): Promise<boolean>;
 }

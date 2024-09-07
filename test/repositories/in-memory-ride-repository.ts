@@ -44,4 +44,15 @@ export class InMemoryRideRepository implements RideRepository {
       ride.passengerId.toString() === passengerId && activeStatuses.has(ride.status)
     );
   }
+
+  async hasActiveRideByDriverId(driverId: string): Promise<boolean> {
+    const activeStatuses = new Set([
+      RideStatus.ACCEPTED,
+      RideStatus.IN_PROGRESS
+    ]);
+
+    return this.items.some((ride) =>
+      ride.driverId?.toString() === driverId && activeStatuses.has(ride.status)
+    );
+  }
 }

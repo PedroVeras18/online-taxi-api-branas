@@ -2,9 +2,10 @@ import { UniqueEntityID } from '@/core/unique-entity-id';
 import { AggregateRoot } from '@/core/aggregate-root';
 import { DomainProps } from '@/core/domain-props';
 import { Coordinate } from './value-objects.ts/coordinate';
-import { AccountID } from '../account/account';
+import { Account, AccountID } from '../account/account';
 import { RideStatus } from './ride-status';
 import { Replace } from '@/core/replace';
+import { ValidationHandler } from '@/core/validation/validation-handler';
 
 export interface RideProps extends DomainProps {
   from: Coordinate;
@@ -44,6 +45,23 @@ export class Ride extends AggregateRoot<RideProps> {
     );
 
     return ride;
+  }
+
+  public accept(driverAccount: Account, notification: ValidationHandler) {
+    if (!driverAccount.isDriver) {
+      notification.appendAnError(
+        new Error('Esta conta não é de um motorista.')
+      )
+    }
+
+    if (this.status !== RideStatus.REQUESTED) {
+      notification.appendAnError(
+        new Error('A corrida precisa estar com status Solicitada.')
+      )
+    }
+
+    this.props.driverId = driverAccount.id;
+    this.props.status = RideStatus.ACCEPTED
   }
 
   get from() {
